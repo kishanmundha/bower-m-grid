@@ -1,0 +1,28 @@
+{
+  "name": "m-grid",
+  "version": "1.0.0",
+  "description": "A simple grid for angular with pagination",
+  "scripts": {
+    "gulp": "gulp",
+    "lint": "gulp test:lint",
+    "test": "gulp test",
+    "bower": "bower"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kishanmundha/m-grid.git"
+  },
+  "keywords": [
+    "grid",
+    "angular-grid",
+    "m-grid"
+  ],
+  "author": "kishan.mundha@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kishanmundha/m-grid/issues"
+  },
+  "homepage": "https://github.com/kishanmundha/m-grid#readme",
+  "devDependencies": {
+  }
+}
