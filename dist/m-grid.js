@@ -379,8 +379,12 @@
 
             var _asyncOptions = function () {
                 var orderby = '';
+                var sortby = '';
+                var sortorder = '';
                 if ($scope.predicate) {
                     orderby = ($scope.reverse ? '-' : '') + $scope.predicate;
+                    sortby = $scope.predicate;
+                    sortorder = $scope.reverse ? 'desc' : 'asc';
                 }
 
                 var options = {};
@@ -394,6 +398,8 @@
                 angular.extend(options, {
                     term: $scope.search,
                     orderby: orderby,
+                    sortby: sortby,
+                    sorttype: sortorder,
                     skip: $scope.startFrom,
                     take: $scope.displayLimit,
                     page: $scope.currentPage,
