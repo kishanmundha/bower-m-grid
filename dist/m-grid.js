@@ -109,9 +109,12 @@
             var searchTimer;
             var globalSearch = $scope.gridOptions.globalSearch || mGridConfig.globalSearch || 'globalSearch';
             var globalSearchListener;
+            var gridSearchWatch;
+            var gridUrlParamsWatch;
             var enableWatchEvent = false;
             var forceApplyPromise;
             var oldDisplayLimit = ($scope.gridOptions.config || {}).defaultPageLimit || mGridConfig.defaultPageLimit;
+            var oldUrlParams = $scope.gridOptions.urlParams;
 
             // local scope variables
             $scope.predicate = '';
@@ -144,8 +147,20 @@
                     _search(value);
                 });
 
-                var gridSearchWatch = $scope.$watch('gridOptions.search', function (newValue, oldValue) {
+                gridSearchWatch = $scope.$watch('gridOptions.search', function (newValue, oldValue) {
                     _search(newValue);
+                });
+            }
+
+            if ($scope.gridOptions.urlParams) {
+                oldUrlParams = JSON.stringify($scope.gridOptions.urlParams);
+                gridUrlParamsWatch = $scope.$watchCollection('gridOptions.urlParams', function (newValue, oldValue) {
+                    if (enableWatchEvent && oldUrlParams !== JSON.stringify($scope.gridOptions.urlParams)) {
+                        oldUrlParams = JSON.stringify($scope.gridOptions.urlParams);
+                        if ($scope.gridOptions.async) {
+                            _refreshAsyncData();
+                        }
+                    }
                 });
             }
 
@@ -167,6 +182,10 @@
                 }
 
                 displayLimitWatch();
+
+                if (gridUrlParamsWatch) {
+                    gridUrlParamsWatch();
+                }
             });
 
             // compile html
@@ -410,6 +429,7 @@
             };
 
             var _refreshAsyncData = function () {
+                $scope.startFrom = 0;
                 $scope.currentPage = 1;
 
                 var options = _asyncOptions();
