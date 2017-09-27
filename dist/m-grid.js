@@ -303,7 +303,7 @@
                     element.html(html);
                     $compile(element.contents())($scope);
                 } else {
-                    var tbody = element.find('tbody');
+                    var tbody = angular.element(element.find('tbody')[0]);
                     tbody.html(mGridService.getBodyTemplate($scope.gridOptions, mGridConfig));
                     $compile(tbody.contents())($scope);
                 }
@@ -363,7 +363,7 @@
                         if (angular.isUndefined(value)) {
                             value = '';
                         }
-                        _url = _url.replace('{' + key + '}', value);
+                        _url = _url.replace('{' + key + '}', encodeURIComponent(value));
                     });
 
                     return $http.get(_url)
